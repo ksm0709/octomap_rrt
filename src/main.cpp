@@ -17,9 +17,6 @@
 #include <octomap/octomap.h>
 #include <octomap/ColorOcTree.h>
 
-using namespace std;
-using namespace octomap;
-
 int main(int argc, char** argv) {
 
     if (argc != 3)
