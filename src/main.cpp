@@ -76,7 +76,8 @@ int main(int argc, char** argv) {
     octomap::point3d start_position(0,0,0);
     octomap::point3d end_position(1,1,1);
     RRT3D rrt(start_position, end_position, map, 10000, 2);
-    rrt.run();
+    rrt.run(true);
     rrt.writeMap();
     map->writeFile("./path_octotree.bt");
+    rrt.writeInfo2File("./info.txt");
 }
