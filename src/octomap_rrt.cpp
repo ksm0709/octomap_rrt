@@ -39,9 +39,10 @@ void RRT3D::deleteNodes(Node *root)
 Node* RRT3D::getRandomNotObstacleNode()
 {
     octomap::point3d rand_point;
-    short x_max = map_->getBBXMax().x()/ map_->getResolution();
-    short y_max = map_->getBBXMax().y()/ map_->getResolution();
-    short z_max = map_->getBBXMax().z()/ map_->getResolution();
+    octomap::point3d bbx_size = map_->getBBXMax() - map_->getBBXMin();
+    short x_max = bbx_size.x()/ map_->getResolution();
+    short y_max = bbx_size.y()/ map_->getResolution();
+    short z_max = bbx_size.z()/ map_->getResolution();
     map_->getResolution();
     do{
         rand_point = octomap::point3d(rand()%x_max*map_->getResolution(),

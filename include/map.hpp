@@ -15,18 +15,16 @@
 class Map{
 public:
     Map(float resolution, octomap::point3d bbx_max, octomap::point3d bbx_min);
-    Map(std::string file_name);
+    Map(std::string file_name, octomap::point3d bbx_max, octomap::point3d bbx_min);
+    Map(octomap::OcTree* tree);
     ~Map();
     bool isObstacle(octomap::point3d point);
     double getResolution(){ return map_tree_->getResolution();}
-    octomap::point3d getBBXMax(){ return bbx_max_; }
-    octomap::point3d getBBXMin(){ return bbx_min_; }
+    octomap::point3d getBBXMax(){ return map_tree_->getBBXMax(); }
+    octomap::point3d getBBXMin(){ return map_tree_->getBBXMin(); }
     void mixPathMap(octomap::point3d point, bool is_occupied);
     void writeFile(std::string output_name);
 private:
     octomap::OcTree* map_tree_;
-    float resolution_;
-    octomap::point3d bbx_max_;
-    octomap::point3d bbx_min_;
 };
 #endif /* map_hpp */

@@ -7,34 +7,38 @@
 //
 
 #include "../include/map.hpp"
-using namespace octomap;
-Map::Map(float resolution, point3d bbx_max, point3d bbx_min)
+
+Map::Map(float resolution, octomap::point3d bbx_max, octomap::point3d bbx_min)
 {
-    
-//    std::vector<octomap::point3d> points = {point3d(0,0,0), point3d(1,1,1), point3d(0.5,0,0), point3d(1,0,0)};
-//    for(auto p:points){
-//        map_tree_->updateNode(p, true);
-//    }
-    bbx_max_ = bbx_max;
-    bbx_min_ = bbx_min;
+    map_tree_ = new octomap::OcTree(resolution);
+    std::vector<octomap::point3d> points = 
+        {
+            octomap::point3d(0,0,0), 
+            octomap::point3d(1,1,1), 
+            octomap::point3d(0.5,0,0), 
+            octomap::point3d(1,0,0)
+        };
+    for(auto p:points){
+        map_tree_->updateNode(p, true);
+    }
     map_tree_->setBBXMax(bbx_max);
     map_tree_->setBBXMin(bbx_min);
-    
 //    map_tree_->writeBinary("./map.bt");
 }
-Map::Map(std::string file_name)
+Map::Map(std::string file_name, octomap::point3d bbx_max, octomap::point3d bbx_min)
 {
     map_tree_ = new octomap::OcTree(file_name);
-//    bbx_max_ = map_tree_->getBBXMax();
-//    bbx_min_ = map_tree_->getBBXMin();
-    // bbx_max_ = octomap::point3d(40,40,10);
-    // bbx_min_ = octomap::point3d(0,0,0);
-    // map_tree_->setBBXMax(bbx_max_);
-    // map_tree_->setBBXMin(bbx_min_);
+    map_tree_->setBBXMax(bbx_max);
+    map_tree_->setBBXMin(bbx_min);
+}
+Map::Map(octomap::OcTree* tree)
+{
+    map_tree_ = tree;
 }
 Map::~Map()
 {
-    delete map_tree_;
+    if(map_tree_ != NULL)
+        delete map_tree_;
 }
 bool Map::isObstacle(octomap::point3d point)
 {
