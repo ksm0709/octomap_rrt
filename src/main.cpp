@@ -72,9 +72,9 @@ int main(int argc, char** argv) {
     tree.writeBinary( output_file );
     cout<<"done."<<endl;
 
-    Map* map = new Map("./pcd_output/guidance_0.bt");
+    Map* map = new Map(output_file);
     octomap::point3d start_position(0,0,0);
-    octomap::point3d end_position(1,1,1);
+    octomap::point3d end_position(-1,1,1);
     RRT3D rrt(start_position, end_position, map, 10000, 2);
     rrt.run(true);
     rrt.writeMap();
